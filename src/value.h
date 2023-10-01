@@ -1,7 +1,6 @@
 struct value {
 	int type;				// 자료형 비교용 숫자, 0 -> 정수, 1 -> 실수, 2 -> 문자열
 	union {					// 유니온 - 스코프 안에 존재하는 필드 중 하나의 상태로만 존재
-		long long _int; 	// 64 비트 정수
 		double flt;			// 64 비트 실수
 		char *txt;			// 가변 길이 문자열
 		struct value *arr;	// 가변 길이 값 배열
@@ -25,13 +24,13 @@ struct value {
  * 		-1 반환
  */
 int
-init_int(struct value *, char *);
+value_init_int(struct value *, char *);
 
 int
-init_flt(struct value *, char *);
+value_init_flt(struct value *, char *);
 
 int
-init_txt(struct value *, char *);
+value_init_txt(struct value *, char *);
 
 /*
  *	대입 연산
@@ -46,7 +45,7 @@ init_txt(struct value *, char *);
  *		-1 반환
  */
 int
-assign(struct value *, struct value);
+value_assign(struct value *, struct value);
 
 /*
  *	자료형 변환
@@ -58,13 +57,10 @@ assign(struct value *, struct value);
  *		-1 반환
  */
 int
-to_int(struct value *, struct value);
+value_to_flt(struct value *, struct value);
 
 int
-to_flt(struct value *, struct value);
-
-int
-to_txt(struct value *, struct value);
+value_to_txt(struct value *, struct value);
 
 /*
  *	숫자 연산
@@ -76,43 +72,19 @@ to_txt(struct value *, struct value);
  *		-1 반환
  */
 int
-int_flt_add(struct value *, struct value);
+value_flt_add(struct value *, struct value);
 
 int
-int_flt_sub(struct value *, struct value);
+value_flt_sub(struct value *, struct value);
 
 int
-int_flt_mul(struct value *, struct value);
+value_flt_mul(struct value *, struct value);
 
 int
-int_flt_div(struct value *, struct value);
+value_flt_div(struct value *, struct value);
 
 int
-int_flt_rem(struct value *, struct value);
-
-/*
- *	비트 연산
- *
- *	만약 두 변수 모두 정수라면
- *		왼쪽 변수와 오른쪽 변수를 비트 연산하여 오른쪽 변수에 대입
- *		0 반환
- *	아니면
- *	 	-1 반환
- */
-int
-int_and(struct value *, struct value);
-
-int
-int_or(struct value *, struct value);
-
-int
-int_xor(struct value *, struct value);
-
-int
-int_shl(struct value *, struct value);
-
-int
-int_shr(struct value *, struct value);
+value_flt_rem(struct value *, struct value);
 
 /*
  * 	문자 추가
@@ -120,7 +92,7 @@ int_shr(struct value *, struct value);
  * 	문자열 끝에 문자 추가
  */
 void
-txt_push(struct value *, char);
+value_txt_push(struct value *, char);
 
 /*
  * 	마지막 문자 삭제 
@@ -132,7 +104,7 @@ txt_push(struct value *, char);
  * 		-1 반환
  */
 int
-txt_pop(struct value *, char *);
+value_txt_pop(struct value *, char *);
 
 /*
  * 	문자 삽입
@@ -144,7 +116,7 @@ txt_pop(struct value *, char *);
  * 		-1 반환
  */
 int
-txt_insert(struct value *, char, int);
+value_txt_insert(struct value *, char, int);
 
 /*
  * 	문자 삭제
@@ -156,7 +128,7 @@ txt_insert(struct value *, char, int);
  * 		-1 반환
  */
 int
-txt_remove(struct value *, char *, int);
+value_txt_remove(struct value *, char *, int);
 
 /*
  * 	문자 탐색
@@ -168,7 +140,7 @@ txt_remove(struct value *, char *, int);
  * 		-1 반환
  */
 int
-txt_get(struct value *, char *, int);
+value_txt_get(struct value *, char *, int);
 
 /*
  * 	문자열 병합
@@ -176,7 +148,7 @@ txt_get(struct value *, char *, int);
  * 	왼쪽 문자열을 오른쪽 문자열 끝에 이어붙이기
  */
 void
-txt_append(struct value *, struct value);
+value_txt_append(struct value *, struct value);
 
 /*
  * 	문자열 분할
@@ -188,7 +160,7 @@ txt_append(struct value *, struct value);
  * 		-1 반환
  */
 int
-txt_split(struct value *, struct value *, int);
+value_txt_split(struct value *, struct value *, int);
 
 /*
  * 	배열
@@ -196,22 +168,22 @@ txt_split(struct value *, struct value *, int);
  * 	문자열과 동일
  */
 void
-arr_push(struct value *, struct value);
+value_arr_push(struct value *, struct value);
 
 int
-txt_pop(struct value *, struct value *);
+value_txt_pop(struct value *, struct value *);
 
 int
-arr_insert(struct value *, struct value, int);
+value_arr_insert(struct value *, struct value, int);
 
 int
-arr_remove(struct value *, struct value *, int);
+value_arr_remove(struct value *, struct value *, int);
 
 int
-arr_get(struct value *, struct value *, int);
+value_arr_get(struct value *, struct value *, int);
 
 void
-arr_append(struct value *, struct value);
+value_arr_append(struct value *, struct value);
 
 int
-arr_split(struct value *,  struct value *, int);
+value_arr_split(struct value *,  struct value *, int);
