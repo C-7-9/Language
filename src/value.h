@@ -1,7 +1,7 @@
 struct value {
 	int type;				// 자료형 비교용 숫자, 0 -> 정수, 1 -> 실수, 2 -> 문자열
 	union {					// 유니온 - 스코프 안에 존재하는 필드 중 하나의 상태로만 존재
-		double flt;			// 64 비트 실수
+		double num;			// 64 비트 실수
 		char *txt;			// 가변 길이 문자열
 		struct value *arr;	// 가변 길이 값 배열
 	} value;
@@ -24,13 +24,13 @@ struct value {
  * 		-1 반환
  */
 int
-value_init_int(struct value *, char *);
-
-int
-value_init_flt(struct value *, char *);
+value_init_num(struct value *, char *);
 
 int
 value_init_txt(struct value *, char *);
+
+int
+value_init_arr(struct value *, char *);
 
 /*
  *	대입 연산
@@ -57,7 +57,7 @@ value_assign(struct value *, struct value);
  *		-1 반환
  */
 int
-value_to_flt(struct value *, struct value);
+value_to_num(struct value *, struct value);
 
 int
 value_to_txt(struct value *, struct value);
@@ -72,19 +72,19 @@ value_to_txt(struct value *, struct value);
  *		-1 반환
  */
 int
-value_flt_add(struct value *, struct value);
+value_num_add(struct value *, struct value);
 
 int
-value_flt_sub(struct value *, struct value);
+value_num_sub(struct value *, struct value);
 
 int
-value_flt_mul(struct value *, struct value);
+value_num_mul(struct value *, struct value);
 
 int
-value_flt_div(struct value *, struct value);
+value_num_div(struct value *, struct value);
 
 int
-value_flt_rem(struct value *, struct value);
+value_num_rem(struct value *, struct value);
 
 /*
  * 	문자 추가
@@ -171,7 +171,7 @@ void
 value_arr_push(struct value *, struct value);
 
 int
-value_txt_pop(struct value *, struct value *);
+value_arr_pop(struct value *, struct value *);
 
 int
 value_arr_insert(struct value *, struct value, int);
