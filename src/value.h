@@ -95,7 +95,7 @@ value_num_rem(struct value *, struct value);
  * 
  * 	문자열 끝에 문자 추가
  */
-void
+int
 value_txt_push(struct value *, char);
 
 /*
