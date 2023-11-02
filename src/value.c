@@ -1,4 +1,6 @@
 #include "value.h"
+#include <string.h>
+#include <stdlib.h>
 #include <math.h>
 
 int
@@ -114,9 +116,9 @@ value_txt_remove(struct value *val, char *ch, int in)
 	if(in < 0 || in >= lenth)
 		return -1;
 
-	*ch = val->data.txt[in]
+	*ch = val->data.txt[in];
 
-	memmove(val->data.txt + in, val->data.txt + in + 1,(lenth-in))
+	memmove(val->data.txt + in, val->data.txt + in + 1,(lenth-in));
 
 	val-> data.txt = realloc(val->data.txt, lenth);
 	return 0;
@@ -128,20 +130,20 @@ value_txt_get(struct value *val, char *ch, int in)
 	if(val->type != TXT || val->data.txt == NULL)
 		return -1;
 
-	int lenth = strlen(val->data.txt)
+	int lenth = strlen(val->data.txt);
 
 	if(in < 0 || in >= lenth)
 		return -1;
 
-	*ch = val->data.txt[in]
+	*ch = val->data.txt[in];
 
 	return 0;
 }
 
-void
+int
 value_txt_append(struct value *lft, struct value rgt)
 {
-	if(lft->type != TXT || rgt.type != TXT)
+	if (lft->type != TXT || rgt.type != TXT)
 		return -1;
 	
 	int lftlenth = strlen(lft->data.txt);
@@ -157,7 +159,7 @@ value_txt_append(struct value *lft, struct value rgt)
 int
 value_txt_split(struct value *lft, struct value *rgt, int in)
 {
-	if(lft->type != TXT || rgt->type != TXT || lft->data.txt ++ NULL)
+	if(lft->type != TXT || rgt->type != TXT || lft->data.txt == NULL)
 		return -1;
 
 	int lenth = strlen(lft->data.txt);
@@ -166,5 +168,6 @@ value_txt_split(struct value *lft, struct value *rgt, int in)
 		return -1;
 
 	lft->data.txt = realloc(lft->data.txt, (in + 1));
-	lft->data.txt[in] = '\0'
+	lft->data.txt[in] = '\0';
+	return 0;
 }
