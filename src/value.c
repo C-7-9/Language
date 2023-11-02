@@ -142,8 +142,28 @@ value_arr_remove(struct value *val, struct value *remove_value, int index) {
     return 0;
 }
 
+/*
+ * 	문자 탐색
+ *
+ * 	만약 int가 문자열 인덱스 범위 안에 있다면
+ * 		int에 해당하는 인자를 char *에 대입
+ * 		0 반환
+ * 		아니면
+ * 		-1 반환
+ */
+
 int
-value_arr_get(struct value *, struct value *, int);
+value_arr_get(struct value *val, struct value *get_value, int index)
+{
+	if (val->type != ARR)
+        return -1;
+
+    if (index < 0 || index >= val->data.arr.len)
+        return -1;
+	
+	*get_value = val->data.arr.arr_val[index];
+	return 0;
+}
 
 // 배열 끝에 추가하기
 void
