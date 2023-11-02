@@ -130,7 +130,7 @@ value_txt_get(struct value *val, char *ch, int in)
 
 	int lenth = strlen(val->data.txt)
 
-	if(in < 0 || in >= lenth):
+	if(in < 0 || in >= lenth)
 		return -1;
 
 	*ch = val->data.txt[in]
@@ -162,8 +162,9 @@ value_txt_split(struct value *lft, struct value *rgt, int in)
 
 	int lenth = strlen(lft->data.txt);
 
-	if(in < 0 || in >= len)
+	if(in < 0 || in >= lenth)
 		return -1;
 
-	//뒷부분 잘 모르겠음 헬프 요망
+	lft->data.txt = realloc(lft->data.txt, (in + 1));
+	lft->data.txt[in] = '\0'
 }
