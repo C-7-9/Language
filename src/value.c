@@ -133,16 +133,26 @@ value_arr_get(struct value *val, struct value *get_value, int index)
 	return 0;
 }
 
-int
+int 
 value_arr_append(struct value *val, struct value append_value)
 {
-	if (val->type != ARR)
+    if (val->type != ARR)
         return -1;
-	val->data.arr.arr_val = realloc(val->data.arr.arr_val, (val->data.arr.len + 1) * sizeof(struct value));
-	val->data.arr.arr_val[val->data.arr.len] = append_value;
-	val->data.arr.len++;
+    
+    int left_val_lenght = val->data.arr.len;
+    int right_val_length= 0;
 
-	return 0;
+    for(int i = 0; i < left_val_lenght; i++){
+        right_val_length++;
+    }
+
+    val->data.arr.arr_val = realloc(val->data.arr.arr_val, (left_val_lenght + right_val_length) * sizeof(struct value));
+
+    val->data.arr.arr_val[left_val_lenght] = append_value;
+
+    val->data.arr.len = left_val_lenght + 1;
+
+    return 0;
 }
 
 int
