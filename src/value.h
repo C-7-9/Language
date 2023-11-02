@@ -192,7 +192,7 @@ value_arr_remove(struct value *, struct value *, int);
 int
 value_arr_get(struct value *, struct value *, int);
 
-void
+int
 value_arr_append(struct value *, struct value);
 
 int

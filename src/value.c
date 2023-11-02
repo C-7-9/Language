@@ -137,8 +137,7 @@ value_arr_remove(struct value *val, struct value *remove_value, int index) {
     }
 
     val->data.arr.len--;
-    val->data.arr.arr_val = realloc(val->data.arr.arr_val, (val->data.arr.len + 1) * sizeof(struct value));
-
+	
     return 0;
 }
 
@@ -166,10 +165,38 @@ value_arr_get(struct value *val, struct value *get_value, int index)
 }
 
 // 배열 끝에 추가하기
-void
-value_arr_append(struct value *, struct value);
+int
+value_arr_append(struct value *val, struct value append_value)
+{
+	if (val->type != ARR)
+        return -1;
+	val->data.arr.arr_val = realloc(val->data.arr.arr_val, (val->data.arr.len + 1) * sizeof(struct value));
+	val->data.arr.arr_val[val->data.arr.len] = append_value;
+	val->data.arr.len++;
+
+	return 0;
+}
 
 
 // 배열 하나가 있으면 주어진 인덱스기준 왼쪽,오른쪽 나누기
+
+/*
+ * 	문자열 분할
+ * 	
+ * 	만약 int가 왼쪽 문자열 인덱스 범위 안에 있다면
+ * 		int에 해당하는 인덱스부터 문자열 끝까지를 오른쪽 문자열 포인터에 대입
+ * 		0 반환
+ * 		아니면
+ * 		-1 반환
+ */
 int
-value_arr_split(struct value *,  struct value *, int);
+value_arr_split(struct value *val,  struct value *split_arr, int split_num)
+{
+	if (val->type != ARR)
+        return -1;
+
+	for (int i = split_num; i < val->data.arr.len - 1; i++) {
+        *split_arr->data.arr.arr_val = val->data.arr.arr_val[split_num];
+    }
+
+}
