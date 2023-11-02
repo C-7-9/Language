@@ -1,3 +1,8 @@
+struct arr{
+	struct value *arr_val;
+	int len;
+};
+
 struct value {
 	enum type {
 		NUM,
@@ -7,7 +12,7 @@ struct value {
 	union {					// 유니온 - 스코프 안에 존재하는 필드 중 하나의 상태로만 존재
 		double num;			// 64 비트 실수
 		char *txt;			// 가변 길이 문자열
-		struct value *arr;	// 가변 길이 값 배열
+		struct arr arr;	// 가변 길이 값 배열
 	} data;
 };
 

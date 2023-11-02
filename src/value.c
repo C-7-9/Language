@@ -52,40 +52,30 @@ value_num_rem(struct value *left, struct value right)
 }
 
 int
-value_arr_push(struct value *val, struct value *new_value)
+value_arr_push(struct value *val, struct value push_value)
 {
 	if (val->type != ARR)
-			return -1;
+			return -1;	
 
-	int len = 0;
-
-	if (val->data.arr != '\0') {
-		// 계산된 배열 요소의 수를 가져옵니다.
-
-		struct value *current = val->data.arr;
-		
-		while (current->type != NUM) {
-			len++;
-			current++;
-		}
-	}
-
-	// 새로운 value 요소를 배열에 추가하기 위해 realloc을 사용합니다.
-	val->data.arr = realloc(val->data.arr, (len + 2) * sizeof(struct value));
-
-	if (val->data.arr == '\0') {
-	    // 메모리 할당 실패 시 예외 처리
-	    return -1;
-	}
-
-	// 새로운 value 요소를 배열에 복사합니다.
-	val->data.arr[len] = *new_value;
-
+	val->data.arr.arr_val = realloc(val->data.arr.arr_val, (val->data.arr.len + 1)*sizeof(struct value));
+	val->data.arr.len++;
+	val->data.arr.arr_val[val->data.arr.len-1] = push_value;
+	
 	return 0;
 }
 
 int
-value_arr_pop(struct value *, struct value *);
+value_arr_pop(struct value *val, struct value *pop_value)
+{
+	if (val->type != ARR || val->data.arr.arr_val == NULL)
+		return -1;
+	
+	*pop_value = val->data.arr.arr_val[val->data.arr.len-1];
+	val->data.arr.len--;
+	val->data.arr.arr_val = realloc(val->data.arr.arr_val, (val->data.arr.len - 1)*sizeof(struct value));
+	
+	return 0;	
+}
 
 int
 value_arr_insert(struct value *, struct value, int);
@@ -101,3 +91,4 @@ value_arr_append(struct value *, struct value);
 
 int
 value_arr_split(struct value *,  struct value *, int);
+// 배열 하나가 있으면 주어진 인덱스기준 왼쪽,오른쪽 나누기
