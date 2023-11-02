@@ -80,17 +80,6 @@ value_arr_pop(struct value *val, struct value *pop_value)
 	return 0;	
 }
 
-
-
-/*
- * 	문자 삽입
- *
- * 	만약 int가 문자열 인덱스 범위 안에 있다면
- * 		문자열에 char를 끼워넣기
- * 		0 반환
- * 		아니면
- * 		-1 반환
- */
 int 
 value_arr_insert(struct value *val, struct value insert_value, int index)
 {
@@ -111,16 +100,6 @@ value_arr_insert(struct value *val, struct value insert_value, int index)
     return 0;
 }
 
-
-/*
- * 	배열 삭제
- *
- * 	만약 배열 안에 인자가 있고, int가 문자열 인덱스 범위 안에 있다면
- * 		int에 해당하는 인자 삭제 후 struct value *에 대입
- * 		0 반환
- * 		아니면
- * 		-1 반환
- */
 int 
 value_arr_remove(struct value *val, struct value *remove_value, int index) {
 	
@@ -141,16 +120,6 @@ value_arr_remove(struct value *val, struct value *remove_value, int index) {
     return 0;
 }
 
-/*
- * 	문자 탐색
- *
- * 	만약 int가 문자열 인덱스 범위 안에 있다면
- * 		int에 해당하는 인자를 char *에 대입
- * 		0 반환
- * 		아니면
- * 		-1 반환
- */
-
 int
 value_arr_get(struct value *val, struct value *get_value, int index)
 {
@@ -164,7 +133,6 @@ value_arr_get(struct value *val, struct value *get_value, int index)
 	return 0;
 }
 
-// 배열 끝에 추가하기
 int
 value_arr_append(struct value *val, struct value append_value)
 {
@@ -177,18 +145,6 @@ value_arr_append(struct value *val, struct value append_value)
 	return 0;
 }
 
-
-// 배열 하나가 있으면 주어진 인덱스기준 왼쪽,오른쪽 나누기
-
-/*
- * 	문자열 분할
- * 	
- * 	만약 int가 왼쪽 문자열 인덱스 범위 안에 있다면
- * 		int에 해당하는 인덱스부터 문자열 끝까지를 오른쪽 문자열 포인터에 대입
- * 		0 반환
- * 		아니면
- * 		-1 반환
- */
 int
 value_arr_split(struct value *val,  struct value *split_arr, int split_num)
 {
