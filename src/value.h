@@ -171,7 +171,8 @@ value_txt_split(struct value *, struct value *, int);
  *
  * 	문자열과 동일
  */
-void
+
+int
 value_arr_push(struct value *, struct value);
 
 int
