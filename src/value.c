@@ -1,5 +1,6 @@
 #include "value.h"
 #include <math.h>
+#include <stdlib.h>
 
 int
 value_num_add(struct value *left, struct value right)
@@ -123,12 +124,9 @@ value_arr_remove(struct value *val, struct value *remove_value, int index) {
 int
 value_arr_get(struct value *val, struct value *get_value, int index)
 {
-	if (val->type != ARR)
+	if (val->type != ARR || index < 0 || index >= val->data.arr.len)
         return -1;
 
-    if (index < 0 || index >= val->data.arr.len)
-        return -1;
-	
 	*get_value = val->data.arr.arr_val[index];
 	return 0;
 }
@@ -156,13 +154,18 @@ value_arr_append(struct value *val, struct value append_value)
 }
 
 int
-value_arr_split(struct value *val,  struct value *split_arr, int split_num)
+value_arr_split(struct value *left, struct value *right, int split_num)
 {
-	if (val->type != ARR)
-        return -1;
+	if (left->type != ARR || right->type != ARR)
+		return -1;
 
-	for (int i = split_num; i < val->data.arr.len - 1; i++) {
-        *split_arr->data.arr.arr_val = val->data.arr.arr_val[split_num];
-    }
+	int left_len = right->data.arr.len - split_num;
+	left->data.arr.arr_val = 
+		realloc(left->data.arr.arr_val, left_len * sizeof(struct value));
+	left->data.arr.len = left_len;
+	
+	for (int i = split_num; i < left_len; i++)
+		left->data.arr.arr_val[i - split_num] = right->data.arr.arr_val[i];
 
+	return 0;
 }
