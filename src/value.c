@@ -169,5 +169,123 @@ value_txt_split(struct value *lft, struct value *rgt, int in)
 
 	lft->data.txt = realloc(lft->data.txt, (in + 1));
 	lft->data.txt[in] = '\0';
+	
+	return 0;
+}
+
+int
+value_arr_push(struct value *val, struct value push_value)
+{
+	//자료형 타입이 arr인지 확인
+	if (val->type != ARR)
+			return -1;	
+
+	// arr안의 데이터 값을 arr안에 넣어주고 value의 크기만큼 메모리를 재할당
+	val->data.arr.arr_val = realloc(val->data.arr.arr_val, (val->data.arr.len + 1)*sizeof(struct value));
+	val->data.arr.len++;
+	val->data.arr.arr_val[val->data.arr.len-1] = push_value;
+	
+	return 0;
+}
+
+int
+value_arr_pop(struct value *val, struct value *pop_value)
+{
+	// 자료형 타입이 arr인지 NULL인지 확인한다.
+	if (val->type != ARR || val->data.arr.arr_val == NULL)
+		return -1;
+
+	*pop_value = val->data.arr.arr_val[val->data.arr.len-1];
+	val->data.arr.len--;
+	val->data.arr.arr_val = realloc(val->data.arr.arr_val, (val->data.arr.len - 1)*sizeof(struct value));
+	
+	return 0;	
+}
+
+int 
+value_arr_insert(struct value *val, struct value insert_value, int index)
+{
+    if (val->type != ARR)
+        return -1;
+
+    if (index < 0 || index > val->data.arr.len)
+        return -1;
+
+    val->data.arr.arr_val = realloc(val->data.arr.arr_val, (val->data.arr.len + 1) * sizeof(struct value));
+
+    for (int i = val->data.arr.len; i > index; i--)
+        val->data.arr.arr_val[i] = val->data.arr.arr_val[i-1];
+
+    val->data.arr.arr_val[index] = insert_value;
+    val->data.arr.len++;
+
+    return 0;
+}
+
+int 
+value_arr_remove(struct value *val, struct value *remove_value, int index)
+{
+    if (val->type != ARR)
+        return -1;
+
+    if (index < 0 || index >= val->data.arr.len)
+        return -1;
+
+    *remove_value = val->data.arr.arr_val[index];
+
+    for (int i = index; i < val->data.arr.len - 1; i++)
+        val->data.arr.arr_val[i] = val->data.arr.arr_val[i + 1];
+
+    val->data.arr.len--;
+	
+    return 0;
+}
+
+int
+value_arr_get(struct value *val, struct value *get_value, int index)
+{
+	if (val->type != ARR || index < 0 || index >= val->data.arr.len)
+        return -1;
+
+	*get_value = val->data.arr.arr_val[index];
+	return 0;
+}
+
+int 
+value_arr_append(struct value *val, struct value append_value)
+{
+    if (val->type != ARR)
+        return -1;
+    
+    int left_val_lenght = val->data.arr.len;
+    int right_val_length= 0;
+
+    for(int i = 0; i < left_val_lenght; i++)
+        right_val_length++;
+
+    val->data.arr.arr_val = 
+		realloc(val->data.arr.arr_val, (left_val_lenght + right_val_length) * sizeof(struct value));
+
+    val->data.arr.arr_val[left_val_lenght] = append_value;
+
+    val->data.arr.len = left_val_lenght + 1;
+
+    return 0;
+}
+
+int
+value_arr_split(struct value *left, struct value *right, int split_num)
+{
+	if (left->type != ARR || right->type != ARR)
+		return -1;
+
+	int left_len = right->data.arr.len - split_num;
+	left->data.arr.arr_val = 
+		realloc(left->data.arr.arr_val, left_len * sizeof(struct value));
+	left->data.arr.len = left_len;
+	
+	for (int i = split_num; i < left_len; i++)
+		left->data.arr.arr_val[i - split_num] = right->data.arr.arr_val[i];
+
 	return 0;
 }

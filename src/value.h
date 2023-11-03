@@ -1,3 +1,8 @@
+struct arr {
+	struct value *arr_val;
+	int len;
+};
+
 struct value {
 	enum type {
 		NUM,
@@ -7,7 +12,7 @@ struct value {
 	union {					// 유니온 - 스코프 안에 존재하는 필드 중 하나의 상태로만 존재
 		double num;			// 64 비트 실수
 		char *txt;			// 가변 길이 문자열
-		struct value *arr;	// 가변 길이 값 배열
+		struct arr arr;	// 가변 길이 값 배열
 	} data;
 };
 
@@ -151,11 +156,7 @@ value_txt_get(struct value *, char *, int);
  * 	
  * 	왼쪽 문자열을 오른쪽 문자열 끝에 이어붙이기
  */
-<<<<<<< HEAD
-void
-=======
 int
->>>>>>> txt
 value_txt_append(struct value *, struct value);
 
 /*
@@ -175,11 +176,8 @@ value_txt_split(struct value *, struct value *, int);
  *
  * 	문자열과 동일
  */
-<<<<<<< HEAD
-void
-=======
+
 int
->>>>>>> txt
 value_arr_push(struct value *, struct value);
 
 int
@@ -194,7 +192,7 @@ value_arr_remove(struct value *, struct value *, int);
 int
 value_arr_get(struct value *, struct value *, int);
 
-void
+int
 value_arr_append(struct value *, struct value);
 
 int
