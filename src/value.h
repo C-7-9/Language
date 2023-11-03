@@ -151,7 +151,11 @@ value_txt_get(struct value *, char *, int);
  * 	
  * 	왼쪽 문자열을 오른쪽 문자열 끝에 이어붙이기
  */
+<<<<<<< HEAD
 void
+=======
+int
+>>>>>>> txt
 value_txt_append(struct value *, struct value);
 
 /*
@@ -171,7 +175,11 @@ value_txt_split(struct value *, struct value *, int);
  *
  * 	문자열과 동일
  */
+<<<<<<< HEAD
 void
+=======
+int
+>>>>>>> txt
 value_arr_push(struct value *, struct value);
 
 int
