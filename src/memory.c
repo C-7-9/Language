@@ -8,7 +8,7 @@ memory_new_variable(struct memory *mem, char *name, struct value var)
 	if (mem->value == NULL)
 		return -1;
 
-	mem->value = realloc(mem->value, mem->len + 1);
+	mem->value = realloc(mem->value, (mem->len + 1) * sizeof(struct value));
 	mem->value[mem->len] = var;
 	strcpy(mem->name[mem->len], name);
 	mem->len++;
