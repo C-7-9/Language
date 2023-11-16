@@ -15,6 +15,6 @@ int
 memory_new_variable(struct memory *, char *, struct value);
 
 int
-memory_get_variable(struct memory *, char *, struct value);
+memory_get_variable(struct memory *, char *, struct value *);
 
 #endif
