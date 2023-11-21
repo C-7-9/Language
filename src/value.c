@@ -4,6 +4,27 @@
 #include <math.h>
 
 int
+value_init_num(struct value *val, char *num)
+{
+	val->type = NUM;
+	val->data.num = atof(num);
+
+	return 0;
+}
+
+int
+value_init_txt(struct value *val, char *txt)
+{
+	val->type = TXT;
+	size_t txt_len = strlen(txt) + 1;
+	val->data.txt = malloc(txt_len);
+	if (var->data.txt == NULL)
+		return -1;
+	memcpy(val->data.txt, txt, txt_len);
+	return 0;
+}
+
+int
 value_num_add(struct value *left, struct value right)
 {
 	if (left->type != NUM || right.type != NUM)
